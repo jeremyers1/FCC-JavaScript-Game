@@ -4,7 +4,7 @@ const CANVAS_WIDTH = (canvas.width = 600);
 const CANVAS_HEIGHT = (canvas.height = 600);
 
 /* simple method for animation
-const playerImage = new Image(); // call built-in image constructor
+const playerImage = new Image(); // call built-in image constructor, does same as document.createElement('img');
 playerImage.src = 'shadow_dog.png';
 const spriteWidth = 575;
 const spriteHeight = 523;
