@@ -15,8 +15,9 @@ window.addEventListener('load', function () {
 			this.width = width;
 			this.height = height;
 			this.enemies = [];
-			this.enemyInterval = 1000;
+			this.enemyInterval = 500;
 			this.enemyTimer = 0;
+			this.enemyTypes = ['worm', 'ghost'];
 		}
 		update(deltaTime) {
 			if (this.enemyTimer > this.enemyInterval) {
@@ -33,11 +34,13 @@ window.addEventListener('load', function () {
 		}
 		// private methods can only be called from within class
 		#addNewEnemy() {
-			this.enemies.push(new Worm(this));
+			const randomEnemy = this.enemyTypes[Math.floor(Math.random() * this.enemyTypes.length)];
+			if (randomEnemy === 'worm') this.enemies.push(new Worm(this));
+			else if (randomEnemy === 'ghost') this.enemies.push(new Ghost(this));
 			// to make higher-index enemies appear behind lower index enemies
-			this.enemies.sort(function (a, b) {
+			/* this.enemies.sort(function (a, b) {
 				return a.y - b.y;
-			});
+			}); */
 		}
 	}
 
@@ -68,7 +71,7 @@ window.addEventListener('load', function () {
 			this.width = this.spriteWidth / 2;
 			this.height = this.spriteHeight / 2;
 			this.x = this.game.width;
-			this.y = Math.random() * this.game.height;
+			this.y = this.game.height - this.height; //worms on ground
 			this.image = worm; // any html elment with an id is automatically added as a global variable by JS
 			this.vx = Math.random() * 0.1 + 0.1; // velocity on horizontal axis x
 		}
@@ -82,9 +85,22 @@ window.addEventListener('load', function () {
 			this.width = this.spriteWidth / 2;
 			this.height = this.spriteHeight / 2;
 			this.x = this.game.width;
-			this.y = Math.random() * this.game.height;
-			this.image = ghost; 
-			this.vx = Math.random() * 0.2 + 0.1; 
+			this.y = Math.random() * this.game.height * 0.6; // ghosts in top 60% of screen
+			this.image = ghost;
+			this.vx = Math.random() * 0.2 + 0.1;
+			this.angle = 0;
+			this.curve = Math.random() * 3;
+		}
+		update(deltaTime) {
+			super.update(deltaTime); // run parent update(), and now add custom code
+			this.y += Math.sin(this.angle) * this.curve; // for wavy flying
+			this.angle += 0.04;
+		}
+		draw() {
+			ctx.globalAlpha = 0.7; // globalAlpha affects all transparency amounts
+			super.draw(ctx); // run parent draw(), and now add custom code
+			ctx.globalAlpha = 1; // so change globalAlpha back to 1 after drawing a ghost ...
+			// could also use save() ...restore() ... if changing multiple canvas properties rather than just globalAlpha
 		}
 	}
 
