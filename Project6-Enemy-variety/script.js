@@ -15,13 +15,22 @@ window.addEventListener('load', function () {
 			this.width = width;
 			this.height = height;
 			this.enemies = [];
-			this.#addNewEnemy();
+			this.enemyInterval = 1000;
+			this.enemyTimer = 0;
 		}
-		update() {
+		update(deltaTime) {
+			if (this.enemyTimer > this.enemyInterval) {
+				this.enemies = this.enemies.filter(object => !object.markedForDeletion);
+				this.#addNewEnemy();
+				this.enemyTimer = 0;
+				console.log(this.enemies);
+			} else {
+				this.enemyTimer += deltaTime;
+			}
 			this.enemies.forEach(object => object.update());
 		}
 		draw() {
-			this.enemies.forEach(object => object.draw());
+			this.enemies.forEach(object => object.draw(this.ctx));
 		}
 		// private methods can only be called from within class
 		#addNewEnemy() {
@@ -37,11 +46,15 @@ window.addEventListener('load', function () {
 			this.y = Math.random() * this.game.height;
 			this.width = 100;
 			this.height = 100;
+			this.markedForDeletion = false;
 		}
 		update() {
 			this.x--;
+			if (this.x < 0 - this.width) {
+				this.markedForDeletion = true;
+			}
 		}
-		draw() {
+		draw(ctx) {
 			ctx.fillRect(this.x, this.y, this.width, this.height);
 		}
 	}
@@ -52,7 +65,7 @@ window.addEventListener('load', function () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		const deltaTime = timeStamp - lastTime;
 		lastTime = timeStamp;
-		game.update();
+		game.update(deltaTime);
 		game.draw();
 		// some code
 		requestAnimationFrame(animate);
