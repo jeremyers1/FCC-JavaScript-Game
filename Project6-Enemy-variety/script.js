@@ -17,7 +17,7 @@ window.addEventListener('load', function () {
 			this.enemies = [];
 			this.enemyInterval = 500;
 			this.enemyTimer = 0;
-			this.enemyTypes = ['worm', 'ghost'];
+			this.enemyTypes = ['worm', 'ghost', 'spider'];
 		}
 		update(deltaTime) {
 			if (this.enemyTimer > this.enemyInterval) {
@@ -37,6 +37,7 @@ window.addEventListener('load', function () {
 			const randomEnemy = this.enemyTypes[Math.floor(Math.random() * this.enemyTypes.length)];
 			if (randomEnemy === 'worm') this.enemies.push(new Worm(this));
 			else if (randomEnemy === 'ghost') this.enemies.push(new Ghost(this));
+			else if (randomEnemy === 'spider') this.enemies.push(new Spider(this));
 			// to make higher-index enemies appear behind lower index enemies
 			/* this.enemies.sort(function (a, b) {
 				return a.y - b.y;
@@ -96,11 +97,39 @@ window.addEventListener('load', function () {
 			this.y += Math.sin(this.angle) * this.curve; // for wavy flying
 			this.angle += 0.04;
 		}
-		draw() {
+		draw(ctx) {
 			ctx.globalAlpha = 0.7; // globalAlpha affects all transparency amounts
 			super.draw(ctx); // run parent draw(), and now add custom code
 			ctx.globalAlpha = 1; // so change globalAlpha back to 1 after drawing a ghost ...
 			// could also use save() ...restore() ... if changing multiple canvas properties rather than just globalAlpha
+		}
+	}
+
+	class Spider extends Enemy {
+		constructor(game) {
+			super(game); // runs parent class constructor
+			this.spriteWidth = 310;
+			this.spriteHeight = 175;
+			this.width = this.spriteWidth / 2;
+			this.height = this.spriteHeight / 2;
+			this.x = Math.random() * this.game.width;
+			this.y = 0 - this.height; //spider on top of screen
+			this.image = spider;
+			this.vx = 0; // velocity on horizontal axis x
+			this.vy = Math.random() * 0.1 + 0.1; // velocity on vertical axis y
+			this.maxLength = Math.random() * this.game.height;
+		}
+		update(deltaTime) {
+			super.update(deltaTime);
+			this.y += this.vy * deltaTime;
+			if (this.y > this.maxLength) this.vy *= -1; // spiders go back up at 200px
+		}
+		draw(ctx) {
+			ctx.beginPath(); // will draw a spiderweb
+			ctx.moveTo(this.x + this.width / 2, 0); //starting coords for line
+			ctx.lineTo(this.x + this.width / 2, this.y + 10); // ending coords for line
+			ctx.stroke();
+			super.draw(ctx);
 		}
 	}
 
