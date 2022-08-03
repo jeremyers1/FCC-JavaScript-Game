@@ -10,10 +10,12 @@ window.addEventListener('load', function () {
 
 	// basic class for game movement and effects
 	class Game {
-		constructor() {
+		constructor(ctx, width, height) {
+			this.ctx = ctx;
+			this.width = width;
+			this.height = height;
 			this.enemies = [];
 			this.#addNewEnemy();
-			console.log(this.enemies);
 		}
 		update() {
 			this.enemies.forEach(object => object.update());
@@ -23,15 +25,16 @@ window.addEventListener('load', function () {
 		}
 		// private methods can only be called from within class
 		#addNewEnemy() {
-			this.enemies.push(new Enemy());
+			this.enemies.push(new Enemy(this));
 		}
 	}
 
 	// basic class for all enemies
 	class Enemy {
-		constructor() {
-			this.x = 100;
-			this.y = 100;
+		constructor(game) {
+			this.game = game;
+			this.x = this.game.width;
+			this.y = Math.random() * this.game.height;
 			this.width = 100;
 			this.height = 100;
 		}
@@ -43,7 +46,7 @@ window.addEventListener('load', function () {
 		}
 	}
 
-	const game = new Game();
+	const game = new Game(ctx, canvas.width, canvas.height);
 	let lastTime = 0;
 	function animate(timeStamp) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
