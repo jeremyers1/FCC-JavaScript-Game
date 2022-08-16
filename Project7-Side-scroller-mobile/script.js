@@ -37,13 +37,47 @@ window.addEventListener('load', function () {
 			this.height = 200;
 			this.x = 0;
 			this.y = this.gameHeight - this.height;
+			this.image = document.getElementById('playerImage');
+			this.frameX = 0;
+			this.frameY = 0;
+			this.speed = 0;
+			this.vy = 0;
+			this.gravity = 1; 
 		}
 		draw(context) {
 			context.fillStyle = 'white';
 			context.fillRect(this.x, this.y, this.width, this.height);
+			context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
-		update() {
-			this.x++;
+		update(input) {
+			if (input.keys.indexOf('ArrowRight') > -1) {
+				this.speed = 5;
+			} else if (input.keys.indexOf('ArrowLeft') > -1) {
+				this.speed = -5;
+			} else if (input.keys.indexOf('ArrowUp') > -1 && this.onGround()) {
+				this.vy -= 32;
+			} else {
+				this.speed = 0;
+			}
+
+			// horizontal movement and boundaries
+			this.x += this.speed;
+			if (this.x < 0) this.x = 0;
+			else if (this.x > this.gameWidth - this.width) this.x = this.gameWidth - this.width;
+			// vertical movement and boundaries
+			this.y += this.vy;
+			if (!this.onGround()) {
+				// if player is in the air, increase gravity to pull back toward ground
+				this.vy += this.gravity;
+			} else {
+				// if player is on the ground, velocity of y is 0
+				this.vy = 0;
+			}
+			if (this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height;
+		}
+		// check if player is on ground
+		onGround() {
+			return this.y >= this.gameHeight - this.height;
 		}
 	}
 
@@ -61,9 +95,8 @@ window.addEventListener('load', function () {
 	function animate() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		player.draw(ctx);
-		player.update();
+		player.update(input);
 		requestAnimationFrame(animate);
-
 	}
 	animate();
 });
