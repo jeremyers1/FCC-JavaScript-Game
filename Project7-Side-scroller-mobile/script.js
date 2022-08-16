@@ -69,9 +69,11 @@ window.addEventListener('load', function () {
 			if (!this.onGround()) {
 				// if player is in the air, increase gravity to pull back toward ground
 				this.vy += this.gravity;
+				this.frameY = 1;
 			} else {
 				// if player is on the ground, velocity of y is 0
 				this.vy = 0;
+				this.frameY = 0;
 			}
 			if (this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height;
 		}
