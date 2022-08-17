@@ -10,6 +10,8 @@ window.addEventListener('load', function () {
 	class InputHandler {
 		constructor() {
 			this.keys = [];
+			this.touchY = '';
+			this.touchThreshold = 30;
 			window.addEventListener('keydown', e => {
 				// prettier-ignore
 				if ((e.key === 'ArrowDown' ||
@@ -28,6 +30,22 @@ window.addEventListener('load', function () {
 							e.key === 'ArrowRight'){
 					this.keys.splice(this.keys.indexOf(e.key), 1);
 				}
+			});
+			window.addEventListener('touchstart', e => {
+				this.touchY = e.changedTouches[0].pageY;
+			});
+			window.addEventListener('touchmove', e => {
+				const swipeDistance = e.changedTouches[0].pageY - this.touchY;
+				if (swipeDistance < -this.touchThreshold && this.keys.indexOf('swipe up') === -1) {
+					this.keys.push('swipe up');
+				} else if (swipeDistance > this.touchThreshold && this.keys.indexOf('swipe down') === -1) {
+					this.keys.push('swipe down');
+					if (gameOver) restartGame();
+				}
+			});
+			window.addEventListener('touchend', e => {
+				this.keys.splice(this.keys.indexOf('swipe up'), 1);
+				this.keys.splice(this.keys.indexOf('swipe down'), 1);
 			});
 		}
 	}
@@ -60,18 +78,6 @@ window.addEventListener('load', function () {
 		}
 
 		draw(context) {
-			//context.fillStyle = 'white';
-			//context.fillRect(this.x, this.y, this.width, this.height);
-			/* 			context.strokeStyle = 'white';
-			context.strokeRect(this.x, this.y, this.width, this.height);
-			context.beginPath();
-			context.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, Math.PI * 2);
-			context.stroke();
-			// collision area
-			context.strokeStyle = 'blue';
-			context.beginPath();
-			context.arc(this.x, this.y, this.width / 2, 0, Math.PI * 2);
-			context.stroke(); */
 			context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
 		update(input, deltaTime, enemies) {
@@ -100,7 +106,7 @@ window.addEventListener('load', function () {
 				this.speed = 5;
 			} else if (input.keys.indexOf('ArrowLeft') > -1) {
 				this.speed = -5;
-			} else if (input.keys.indexOf('ArrowUp') > -1 && this.onGround()) {
+			} else if ((input.keys.indexOf('ArrowUp') > -1 || input.keys.indexOf('swipe up') > -1) && this.onGround()) {
 				this.vy -= 32;
 			} else {
 				this.speed = 0;
@@ -177,16 +183,6 @@ window.addEventListener('load', function () {
 			this.markedForDeletion = false;
 		}
 		draw(context) {
-			/* 			context.strokeStyle = 'white';
-			context.strokeRect(this.x, this.y, this.width, this.height);
-			context.beginPath();
-			context.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, Math.PI * 2);
-			context.stroke();
-			// collision area
-			context.strokeStyle = 'blue';
-			context.beginPath();
-			context.arc(this.x, this.y, this.width / 2, 0, Math.PI * 2);
-			context.stroke(); */
 			context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
 		update(deltaTime) {
@@ -211,7 +207,6 @@ window.addEventListener('load', function () {
 	function handleEnemies(deltaTime) {
 		if (enemyTimer > enemyInterval + randomEnemyInterval) {
 			enemies.push(new Enemy(canvas.width, canvas.height));
-			console.log(enemies);
 			randomEnemyInterval = Math.random() * 1000 + 500;
 			enemyTimer = 0;
 		} else {
@@ -234,9 +229,9 @@ window.addEventListener('load', function () {
 		if (gameOver) {
 			context.textAlign = 'center';
 			context.fillStyle = 'black';
-			context.fillText('GAME OVER! Press [Enter] to try again!', canvas.width / 2, 200);
+			context.fillText('GAME OVER! Press Enter or Swipe Down to restart!', canvas.width / 2, 200);
 			context.fillStyle = 'white';
-			context.fillText('GAME OVER! Press [Enter] to try again!', canvas.width / 2 + 2, 202);
+			context.fillText('GAME OVER! Press Enter or Swipe Down to restart!', canvas.width / 2 + 2, 202);
 		}
 	}
 
