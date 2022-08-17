@@ -1,7 +1,7 @@
 window.addEventListener('load', function () {
 	const canvas = document.getElementById('canvas1');
 	const ctx = canvas.getContext('2d');
-	canvas.width = 800;
+	canvas.width = 1500; // change this with a screen width algorithm to adjust for different screen sizes
 	canvas.height = 720;
 	let enemies = [];
 	let score = 0;
