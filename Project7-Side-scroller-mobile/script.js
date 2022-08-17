@@ -6,6 +6,7 @@ window.addEventListener('load', function () {
 	let enemies = [];
 	let score = 0;
 	let gameOver = false;
+	const fullScreenButton = document.getElementById('fullScreenButton');
 
 	class InputHandler {
 		constructor() {
@@ -229,9 +230,11 @@ window.addEventListener('load', function () {
 		if (gameOver) {
 			context.textAlign = 'center';
 			context.fillStyle = 'black';
-			context.fillText('GAME OVER! Press Enter or Swipe Down to restart!', canvas.width / 2, 200);
+			context.fillText('GAME OVER!', canvas.width / 2, 200);
+			context.fillText('Press Enter or Swipe Down to restart.', canvas.width / 2, 250);
 			context.fillStyle = 'white';
-			context.fillText('GAME OVER! Press Enter or Swipe Down to restart!', canvas.width / 2 + 2, 202);
+			context.fillText('GAME OVER!', canvas.width / 2 + 2, 202);
+			context.fillText('Press Enter or Swipe Down to restart.', canvas.width / 2 + 2, 252);
 		}
 	}
 
@@ -243,6 +246,18 @@ window.addEventListener('load', function () {
 		gameOver = false;
 		animate(0);
 	}
+
+	function toggleFullScreen() {
+		console.log(document.fullscreenElement);
+		if (!document.fullscreenElement) {
+			canvas.requestFullscreen().catch(err => {
+				alert(`Error: Can't enable full-screen mode: ${err.message}`);
+			});
+		} else {
+			document.exitFullscreen();
+		}
+	}
+	fullScreenButton.addEventListener('click', toggleFullScreen);
 
 	const input = new InputHandler();
 	const player = new Player(canvas.width, canvas.height);
