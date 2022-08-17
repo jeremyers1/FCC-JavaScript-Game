@@ -54,7 +54,7 @@ window.addEventListener('load', function () {
 		draw(context) {
 			//context.fillStyle = 'white';
 			//context.fillRect(this.x, this.y, this.width, this.height);
-			context.strokeStyle = 'white';
+			/* 			context.strokeStyle = 'white';
 			context.strokeRect(this.x, this.y, this.width, this.height);
 			context.beginPath();
 			context.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, Math.PI * 2);
@@ -63,14 +63,14 @@ window.addEventListener('load', function () {
 			context.strokeStyle = 'blue';
 			context.beginPath();
 			context.arc(this.x, this.y, this.width / 2, 0, Math.PI * 2);
-			context.stroke();
+			context.stroke(); */
 			context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
 		update(input, deltaTime, enemies) {
 			// collision detection
 			enemies.forEach(enemy => {
-				const dx = (enemy.x + enemy.width/2) - (this.x + this.width/2);
-				const dy = (enemy.y + enemy.height/2) - (this.y + this.height/2);
+				const dx = enemy.x + enemy.width / 2 - (this.x + this.width / 2);
+				const dy = enemy.y + enemy.height / 2 - (this.y + this.height / 2);
 				const distance = Math.sqrt(dx * dx + dy * dy);
 				if (distance < enemy.width / 2 + this.width / 2) {
 					gameOver = true;
@@ -165,7 +165,7 @@ window.addEventListener('load', function () {
 			this.markedForDeletion = false;
 		}
 		draw(context) {
-			context.strokeStyle = 'white';
+			/* 			context.strokeStyle = 'white';
 			context.strokeRect(this.x, this.y, this.width, this.height);
 			context.beginPath();
 			context.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, Math.PI * 2);
@@ -174,7 +174,7 @@ window.addEventListener('load', function () {
 			context.strokeStyle = 'blue';
 			context.beginPath();
 			context.arc(this.x, this.y, this.width / 2, 0, Math.PI * 2);
-			context.stroke();
+			context.stroke(); */
 			context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
 		}
 		update(deltaTime) {
