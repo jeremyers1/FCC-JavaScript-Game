@@ -13,6 +13,8 @@ export default class Player {
 		this.y = this.gameHeight - this.height;
 		this.frameX = 0;
 		this.frameY = 0;
+		this.speed = 0;
+		this.maxSpeed = 10;
 	}
 
 	draw(context) {
@@ -21,6 +23,10 @@ export default class Player {
 
 	update(input) {
 		this.currentState.handleInput(input);
+		// horizontal movement
+		this.x += this.speed;
+		if (this.x <= 0) this.x = 0;
+		else if (this.x >= this.gameWidth - this.width) this.x = this.gameWidth - this.width;
 	}
 
 	setState(state) {

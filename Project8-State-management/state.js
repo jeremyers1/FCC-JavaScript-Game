@@ -21,6 +21,7 @@ export class StandingLeft extends State {
 
 	enter() {
 		this.player.frameY = 1;
+		this.player.speed = 0;
 	}
 	handleInput(input) {
 		if (input === 'PRESS right') {
@@ -41,6 +42,7 @@ export class StandingRight extends State {
 
 	enter() {
 		this.player.frameY = 0;
+		this.player.speed = 0;
 	}
 	handleInput(input) {
 		if (input === 'PRESS left') {
@@ -61,6 +63,7 @@ export class SittingLeft extends State {
 
 	enter() {
 		this.player.frameY = 9;
+		this.player.speed = 0;
 	}
 	handleInput(input) {
 		if (input === 'PRESS right') {
@@ -79,6 +82,7 @@ export class SittingRight extends State {
 
 	enter() {
 		this.player.frameY = 8;
+		this.player.speed = 0;
 	}
 	handleInput(input) {
 		if (input === 'PRESS left') {
@@ -97,6 +101,7 @@ export class RunningLeft extends State {
 
 	enter() {
 		this.player.frameY = 7;
+		this.player.speed = -this.player.maxSpeed;
 	}
 	handleInput(input) {
 		if (input === 'PRESS right') {
@@ -117,6 +122,7 @@ export class RunningRight extends State {
 
 	enter() {
 		this.player.frameY = 6;
+		this.player.speed = this.player.maxSpeed;
 	}
 	handleInput(input) {
 		if (input === 'PRESS left') {
