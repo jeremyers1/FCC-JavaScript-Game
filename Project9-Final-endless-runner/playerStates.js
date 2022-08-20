@@ -23,7 +23,9 @@ export class Standing extends State {
 		super('SITTING');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 6;
 		this.player.frameY = 0;
 	}
 	handleInput(input) {
@@ -39,8 +41,10 @@ export class Jumping extends State {
 		super('JUMPING');
 		this.player = player;
 	}
-  enter() {
+	enter() {
     if (this.player.onGround()) this.player.vy -= 28;
+    this.player.frameX = 0;
+		this.player.maxFrame = 4;
 		this.player.frameY = 1;
 	}
 	handleInput(input) {
@@ -56,7 +60,9 @@ export class Falling extends State {
 		super('FALLING');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 4;
 		this.player.frameY = 2;
 	}
 	handleInput(input) {
@@ -72,7 +78,9 @@ export class Running extends State {
 		super('RUNNING');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 8;
 		this.player.frameY = 3;
 	}
 	handleInput(input) {
@@ -90,7 +98,9 @@ export class Dazed extends State {
 		super('DAZED');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 10;
 		this.player.frameY = 4;
 	}
 	handleInput(input) {
@@ -106,7 +116,9 @@ export class Sitting extends State {
 		super('SITTING');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 4;
 		this.player.frameY = 5;
 	}
 	handleInput(input) {
@@ -122,7 +134,9 @@ export class Rolling extends State {
 		super('ROLLING');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 6;
 		this.player.frameY = 6;
 	}
 	handleInput(input) {
@@ -138,7 +152,9 @@ export class Attack1 extends State {
 		super('ATTACK1');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 6;
 		this.player.frameY = 7;
 	}
 	handleInput(input) {
@@ -154,7 +170,9 @@ export class Attack2 extends State {
 		super('ATTACK2');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 11;
 		this.player.frameY = 8;
 	}
 	handleInput(input) {
@@ -170,7 +188,9 @@ export class Attack3 extends State {
 		super('ATTACK3');
 		this.player = player;
 	}
-	enter() {
+  enter() {
+    this.player.frameX = 0;
+		this.player.maxFrame = 3;
 		this.player.frameY = 9;
 	}
 	handleInput(input) {
