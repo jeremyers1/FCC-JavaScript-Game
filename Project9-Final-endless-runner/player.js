@@ -3,7 +3,7 @@ import { Standing, Jumping, Falling, Running, Dazed, Sitting, Rolling, Attack1, 
 export class Player {
 	constructor(game) {
 		this.game = game;
-		this.width = 100;
+		this.width = 100.4;
 		this.height = 91.3;
 		this.x = 0;
 		this.y = this.game.height - this.height - this.game.groundMargin;
