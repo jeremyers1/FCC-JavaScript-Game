@@ -20,9 +20,7 @@ export class Player {
 
 		this.vy = 0;
 		this.gravity = 1;
-		this.states = [new Standing(this), new Jumping(this), new Falling(this), new Running(this), new Dazed(this), new Sitting(this), new Rolling(this), new Attack1(this), new Attack2(this), new Attack3(this)];
-		this.currentState = this.states[0];
-		this.currentState.enter();
+		this.states = [new Standing(this.game), new Jumping(this.game), new Falling(this.game), new Running(this.game), new Dazed(this.game), new Sitting(this.game), new Rolling(this.game), new Attack1(this.game), new Attack2(this.game), new Attack3(this.game)];
 	}
 	update(input, deltaTime) {
 		this.checkCollision();
