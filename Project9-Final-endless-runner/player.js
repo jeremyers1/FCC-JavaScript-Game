@@ -1,4 +1,4 @@
-import { Standing, Jumping, Falling, Running, Dazed, Sitting, Rolling, Attack1, Attack2, Attack3 } from './playerStates.js';
+import { Standing, Jumping, Falling, Running, Dazed, Sitting, Rolling, Attack1, Attack2, Attack3, Diving } from './playerStates.js';
 
 export class Player {
 	constructor(game) {
@@ -20,7 +20,7 @@ export class Player {
 
 		this.vy = 0;
 		this.gravity = 1;
-		this.states = [new Standing(this.game), new Jumping(this.game), new Falling(this.game), new Running(this.game), new Dazed(this.game), new Sitting(this.game), new Rolling(this.game), new Attack1(this.game), new Attack2(this.game), new Attack3(this.game)];
+		this.states = [new Standing(this.game), new Jumping(this.game), new Falling(this.game), new Running(this.game), new Dazed(this.game), new Sitting(this.game), new Rolling(this.game), new Attack1(this.game), new Attack2(this.game), new Attack3(this.game), new Diving(this.game)];
 	}
 	update(input, deltaTime) {
 		this.checkCollision();
@@ -31,6 +31,8 @@ export class Player {
 		if (input.includes('ArrowRight')) this.speed = this.maxSpeed;
 		else if (input.includes('ArrowLeft')) this.speed = -this.maxSpeed;
 		else this.speed = 0;
+
+		// horizontal boundaries
 		if (this.x < 0) this.x = 0;
 		if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
 
@@ -38,6 +40,9 @@ export class Player {
 		this.y += this.vy;
 		if (!this.onGround()) this.vy += this.gravity;
 		else this.vy = 0;
+
+		// vertical boundaries
+		if (this.y > this.game.height - this.height - this.game.groundMargin) this.y = this.game.height - this.height - this.game.groundMargin;
 
 		// sprite animation
 		if (this.frameTimer > this.frameInterval) {
