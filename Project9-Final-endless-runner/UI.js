@@ -16,7 +16,7 @@ export class UI {
 		// Score
 		context.fillText('Score: ' + this.game.score, 20, 50);
 		// Timer
-		context.font = this.fontSize * 0.6 + 'px ' + this.fontFamily;
+		context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
 		context.fillText('Time: ' + (this.game.time * 0.001).toFixed(1), 20, 80);
 		// Game Over Message
 		if (this.game.gameOver) {

@@ -27,6 +27,6 @@ export class CollisionAnimation {
 		} else {
 			this.frameTimer += deltaTime;
 		}
-		if (frameX > this.maxFrame) this.markedForDeletion = true;
+		if (this.frameX > this.maxFrame) this.markedForDeletion = true;
 	}
 }

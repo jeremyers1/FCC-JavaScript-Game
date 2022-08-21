@@ -35,7 +35,7 @@ window.addEventListener('load', function () {
 			this.enemyInterval = 1000;
 
 			this.time = 0;
-			this.maxTime = 2000;
+			this.maxTime = 10000;
 			this.score = 0;
 			this.gameOver = false;
 			this.fontColor = 'black';
