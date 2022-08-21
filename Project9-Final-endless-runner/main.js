@@ -34,11 +34,16 @@ window.addEventListener('load', function () {
 			this.enemyTimer = 0;
 			this.enemyInterval = 1000;
 
+			this.time = 0;
+			this.maxTime = 2000;
 			this.score = 0;
+			this.gameOver = false;
 			this.fontColor = 'black';
 		}
 
 		update(deltaTime) {
+			this.time += deltaTime;
+			if (this.time > this.maxTime) this.gameOver = true;
 			this.background.update();
 			this.player.update(this.input.keys, deltaTime);
 
@@ -102,7 +107,7 @@ window.addEventListener('load', function () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		game.update(deltaTime);
 		game.draw(ctx);
-		requestAnimationFrame(animate);
+		if (!game.gameOver) requestAnimationFrame(animate);
 	}
 	animate(0);
 });
