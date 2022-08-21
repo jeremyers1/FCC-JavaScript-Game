@@ -28,12 +28,12 @@ export class Background {
     this.layer3image = layer3;
     this.layer4image = layer4;
     this.layer5image = layer5; */
-		this.layer1 = new Layer(this.game, this.width, this.height, 0, layer1);
-		this.layer2 = new Layer(this.game, this.width, this.height, 0.2, layer2);
-		this.layer3 = new Layer(this.game, this.width, this.height, 0.4, layer3);
-		this.layer4 = new Layer(this.game, this.width, this.height, 0.8, layer4);
-		this.layer5 = new Layer(this.game, this.width, this.height, 1, layer5);
-		this.backgroundLayers = [this.layer1, this.layer2, this.layer3, this.layer4, this.layer5];
+		this.city1 = new Layer(this.game, this.width, this.height, 0, city1);
+		this.city2 = new Layer(this.game, this.width, this.height, 0.2, city2);
+		this.city3 = new Layer(this.game, this.width, this.height, 0.4, city3);
+		this.city4 = new Layer(this.game, this.width, this.height, 0.8, city4);
+		this.city5 = new Layer(this.game, this.width, this.height, 1, city5);
+		this.backgroundLayers = [this.city1, this.city2, this.city3, this.city4, this.city5];
 	}
 	update() {
 		this.backgroundLayers.forEach(layer => {

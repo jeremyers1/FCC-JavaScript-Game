@@ -20,17 +20,17 @@ class State {
 // STANDING: 0
 export class Standing extends State {
 	constructor(player) {
-		super('SITTING');
+		super('STANDING');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 6;
 		this.player.frameY = 0;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -42,14 +42,14 @@ export class Jumping extends State {
 		this.player = player;
 	}
 	enter() {
-    if (this.player.onGround()) this.player.vy -= 28;
-    this.player.frameX = 0;
+		if (this.player.onGround()) this.player.vy -= 25;
+		this.player.frameX = 0;
 		this.player.maxFrame = 4;
 		this.player.frameY = 1;
 	}
 	handleInput(input) {
 		if (this.player.vy > this.player.gravity) {
-			this.player.setState(states.FALLING);
+			this.player.setState(states.FALLING, 1);
 		}
 	}
 }
@@ -60,14 +60,14 @@ export class Falling extends State {
 		super('FALLING');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 4;
 		this.player.frameY = 2;
 	}
 	handleInput(input) {
 		if (this.player.onGround()) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -78,16 +78,16 @@ export class Running extends State {
 		super('RUNNING');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 8;
 		this.player.frameY = 3;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowDown')) {
-			this.player.setState(states.SITTING);
+			this.player.setState(states.SITTING, 0);
 		} else if (input.includes('ArrowUp')) {
-			this.player.setState(states.JUMPING);
+			this.player.setState(states.JUMPING, 1);
 		}
 	}
 }
@@ -98,14 +98,14 @@ export class Dazed extends State {
 		super('DAZED');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 10;
 		this.player.frameY = 4;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -116,14 +116,14 @@ export class Sitting extends State {
 		super('SITTING');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 4;
 		this.player.frameY = 5;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -134,14 +134,14 @@ export class Rolling extends State {
 		super('ROLLING');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 6;
 		this.player.frameY = 6;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -152,14 +152,14 @@ export class Attack1 extends State {
 		super('ATTACK1');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 6;
 		this.player.frameY = 7;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -170,14 +170,14 @@ export class Attack2 extends State {
 		super('ATTACK2');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 11;
 		this.player.frameY = 8;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
@@ -188,14 +188,14 @@ export class Attack3 extends State {
 		super('ATTACK3');
 		this.player = player;
 	}
-  enter() {
-    this.player.frameX = 0;
+	enter() {
+		this.player.frameX = 0;
 		this.player.maxFrame = 3;
 		this.player.frameY = 9;
 	}
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
-			this.player.setState(states.RUNNING);
+			this.player.setState(states.RUNNING, 1);
 		}
 	}
 }
