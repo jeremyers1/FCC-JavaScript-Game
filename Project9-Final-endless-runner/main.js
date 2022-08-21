@@ -43,7 +43,6 @@ window.addEventListener('load', function () {
 				enemy.update(deltaTime);
 				if (enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy), 1);
 			});
-			console.log(this.enemies);
 		}
 
 		draw(context) {

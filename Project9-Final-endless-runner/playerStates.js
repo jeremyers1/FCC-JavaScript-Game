@@ -31,6 +31,8 @@ export class Standing extends State {
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
 			this.player.setState(states.RUNNING, 1);
+		} else if (input.includes(' ')) {
+			this.player.setState(states.ROLLING, 2);
 		}
 	}
 }
@@ -50,6 +52,8 @@ export class Jumping extends State {
 	handleInput(input) {
 		if (this.player.vy > this.player.gravity) {
 			this.player.setState(states.FALLING, 1);
+		} else if (input.includes(' ')) {
+			this.player.setState(states.ROLLING, 2);
 		}
 	}
 }
@@ -88,6 +92,8 @@ export class Running extends State {
 			this.player.setState(states.SITTING, 0);
 		} else if (input.includes('ArrowUp')) {
 			this.player.setState(states.JUMPING, 1);
+		} else if (input.includes(' ')) {
+			this.player.setState(states.ROLLING, 2);
 		}
 	}
 }
@@ -110,7 +116,7 @@ export class Dazed extends State {
 	}
 }
 
-// Sitting: 5
+// SITTING: 5
 export class Sitting extends State {
 	constructor(player) {
 		super('SITTING');
@@ -124,6 +130,8 @@ export class Sitting extends State {
 	handleInput(input) {
 		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
 			this.player.setState(states.RUNNING, 1);
+		} else if (input.includes(' ')) {
+			this.player.setState(states.ROLLING, 2);
 		}
 	}
 }
@@ -140,8 +148,12 @@ export class Rolling extends State {
 		this.player.frameY = 6;
 	}
 	handleInput(input) {
-		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
+		if (!input.includes(' ') && this.player.onGround()) {
 			this.player.setState(states.RUNNING, 1);
+		} else if (!input.includes(' ') && !this.player.onGround()) {
+			this.player.setState(states.FALLING, 1);
+		} else if (input.includes(' ') && input.includes('ArrowUp') && this.player.onGround()) {
+			this.player.vy -= 27;		//rather than jumping state due to transition
 		}
 	}
 }
