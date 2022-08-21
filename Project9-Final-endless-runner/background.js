@@ -13,6 +13,9 @@ class Layer {
 		else this.x -= this.game.speed * this.speedModifier;
 	}
 	draw(context) {
+		// there's a slight jump in ground enemies and background when image swap occurs
+		// adding +4 to this.x on second image removs the jump, but then there is a 4px gap in images...
+		// this is because, although the image swap is fast, 4px (at current scroll speed) pass while image swaps
 		context.drawImage(this.image, this.x, this.y, this.width, this.height);
 		context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
 	}
@@ -23,11 +26,6 @@ export class Background {
 		this.game = game;
 		this.width = 1667;
 		this.height = 500;
-		/*  this.layer1image = layer1;
-    this.layer2image = layer2;
-    this.layer3image = layer3;
-    this.layer4image = layer4;
-    this.layer5image = layer5; */
 		this.city1 = new Layer(this.game, this.width, this.height, 0, city1);
 		this.city2 = new Layer(this.game, this.width, this.height, 0.2, city2);
 		this.city3 = new Layer(this.game, this.width, this.height, 0.4, city3);
