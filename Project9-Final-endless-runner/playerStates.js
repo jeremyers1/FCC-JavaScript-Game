@@ -113,9 +113,11 @@ export class Dazed extends State {
 		this.game.player.maxFrame = 10;
 		this.game.player.frameY = 4;
 	}
-	handleInput(input) {
-		if (input.includes('ArrowLeft') || input.includes('ArrowRight')) {
+	handleInput() {
+		if (this.game.player.frameX >= 10 && this.game.player.onGround()) {
 			this.game.player.setState(states.RUNNING, 1);
+		} else if (this.game.player.frameX >= 10 && !this.game.player.onGround()) {
+			this.game.player.setState(states.FALLING, 2);
 		}
 	}
 }
