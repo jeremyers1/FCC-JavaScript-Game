@@ -54,3 +54,24 @@ export class Fire extends Particle {
 		context.restore();
 	}
 }
+
+export class Splash extends Particle {
+	constructor(game, x, y) {
+		super(game);
+		this.image = fire;
+		this.x = x;
+		this.y = y;
+		this.size = Math.random() * 100 + 100;
+		this.speedX = Math.random() * 6 - 4;
+		this.speedY = Math.random() * 2 + 2;
+		this.gravity = 0;
+	}
+	update() {
+		super.update();
+		this.gravity += 0.1;
+		this.y += this.gravity;
+	}
+	draw(context) {
+		context.drawImage(this.image, this.x, this.y, this.size, this.size);
+	}
+}
