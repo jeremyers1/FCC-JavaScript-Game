@@ -27,6 +27,7 @@ window.addEventListener('load', function () {
 			this.player.currentState = this.player.states[0];
 			this.player.currentState.enter();
 			this.particles = [];
+			this.maxParticles = 75;
 
 			this.enemies = [];
 			this.enemyTimer = 0;
@@ -55,6 +56,9 @@ window.addEventListener('load', function () {
 				particle.update();
 				if (particle.markedForDeletion) this.particles.splice(index, 1);
 			});
+			if (this.particles.length > this.maxParticles) {
+				this.particles = this.particles.slice(0, this.maxParticles);
+			}
 		}
 
 		draw(context) {
