@@ -40,10 +40,14 @@ export class FlyingEnemy extends Enemy {
     this.speedX = Math.random() + 1;
     this.speedY = 0;
 		this.maxFrame = 5;
-		this.image = fly;
+    this.image = fly;
+    this.angle = 0;
+    this.va = Math.random() * 0.1 + 0.1; 
 	}
 	update(deltaTime) {
-		super.update(deltaTime);
+    super.update(deltaTime);
+    this.angle += this.va;
+    this.y += Math.sin(this.angle);
 	}
 }
 
