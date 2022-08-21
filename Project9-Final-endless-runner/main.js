@@ -29,6 +29,7 @@ window.addEventListener('load', function () {
 			this.particles = [];
 			this.maxParticles = 75;
 			this.collisions = [];
+			this.lives = 5;
 
 			this.enemies = [];
 			this.enemyTimer = 0;
