@@ -7,7 +7,7 @@ import { UI } from './UI.js';
 window.addEventListener('load', function () {
 	const canvas = document.getElementById('canvas1');
 	const ctx = canvas.getContext('2d');
-	canvas.width = 500;
+	canvas.width = 900;
 	canvas.height = 500;
 
 	class Game {
@@ -29,6 +29,7 @@ window.addEventListener('load', function () {
 			this.particles = [];
 			this.maxParticles = 75;
 			this.collisions = [];
+			this.floatingMessages = [];
 			this.lives = 5;
 
 			this.enemies = [];
@@ -36,8 +37,9 @@ window.addEventListener('load', function () {
 			this.enemyInterval = 1000;
 
 			this.time = 0;
-			this.maxTime = 10000;
+			this.maxTime = 30000;
 			this.score = 0;
+			this.winningScore = 40;
 			this.gameOver = false;
 			this.fontColor = 'black';
 		}
@@ -55,24 +57,30 @@ window.addEventListener('load', function () {
 			} else {
 				this.enemyTimer += deltaTime;
 			}
-			this.enemies.forEach((enemy, index) => {
+			this.enemies.forEach(enemy => {
 				enemy.update(deltaTime);
-				if (enemy.markedForDeletion) this.enemies.splice(index, 1);
 			});
 
 			// handle particles
-			this.particles.forEach((particle, index) => {
+			this.particles.forEach(particle => {
 				particle.update();
-				if (particle.markedForDeletion) this.particles.splice(index, 1);
 			});
 			if (this.particles.length > this.maxParticles) {
 				this.particles.length = this.maxParticles;
 			}
 
 			// handle collision sprites
-			this.collisions.forEach((collision, index) => {
+			this.collisions.forEach(collision => {
 				collision.update(deltaTime);
-				if (collision.markedForDeletion) this.collisions.splice(index, 1);
+			});
+			this.particles = this.particles.filter(particle => !particle.markedForDeletion);
+			this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
+			this.collisions = this.collisions.filter(collision => !collision.markedForDeletion);
+			this.floatingMessages = this.floatingMessages.filter(message => !message.markedForDeletion);
+
+			// handle score messages
+			this.floatingMessages.forEach(message => {
+				message.update();
 			});
 		}
 
@@ -87,6 +95,9 @@ window.addEventListener('load', function () {
 			});
 			this.collisions.forEach(collision => {
 				collision.draw(context);
+			});
+			this.floatingMessages.forEach(message => {
+				message.draw(context);
 			});
 			this.UI.draw(context);
 		}
